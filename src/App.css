@@ -1,0 +1,52 @@
+body {
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 2rem;
+}
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+}
+.title {
+  font-size: 3rem;
+  font-family: fantasy;
+}
+.todo-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.active-containers {
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.active, .done {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 2rem;
+  gap: 2rem;
+  border-radius: 1rem;
+}
+
+.active, .done {
+  background-color: palevioletred;
+  box-sizing: border-box;
+  padding: 1rem;
+}
+.active {
+  height: fit-content;
+}
+.done {
+  background-color: green;
+  height: fit-content;
+}
+

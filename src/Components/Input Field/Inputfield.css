@@ -1,0 +1,30 @@
+.input-field {
+    display: flex;
+}
+.to-do-input {
+    font-size: 2rem;
+    box-sizing: border-box;
+    padding: 1rem 3rem;
+    outline: none;
+    border: none;
+    box-shadow: 0 0 3px gray;
+    border-top-left-radius: 3rem;
+    border-bottom-left-radius: 3rem;
+}
+.add-btn {
+    font-size: 2rem;
+    box-sizing: border-box;
+    padding: 1rem 3rem;
+    border: none;
+    box-shadow: 0 0 3px gray;
+    border-top-right-radius: 3rem;
+    border-bottom-right-radius: 3rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.add-btn:hover {
+    opacity: 0.7;
+}
+.add-btn:active {
+    opacity: 0.6;
+}

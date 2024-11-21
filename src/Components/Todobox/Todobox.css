@@ -1,0 +1,51 @@
+.box-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 2rem;
+    align-items: center;
+    box-sizing: border-box;
+    background-color: white;
+    color: black;
+    padding: 1rem 2rem;
+    border-radius: 3rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.box-container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 3px 3px black;
+}
+.box-container:active {
+    cursor: grab;
+}
+.box-buttons {
+    display: flex;
+    width: 20%;
+    justify-content: space-around;
+}
+.box-buttons button {
+    cursor: pointer;
+}
+
+.box-name-completed  {
+    text-decoration: line-through;
+}
+
+.edit-input {
+    border: none;
+    font-size: inherit;
+    outline: none;
+}
+.edited-input {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.edited-buttons {
+    display: flex;
+    gap: 10px;
+}
+.edited-buttons button {
+    cursor: pointer;
+}

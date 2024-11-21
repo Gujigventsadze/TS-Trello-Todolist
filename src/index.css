@@ -1,0 +1,10 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: rgb(131, 131, 207);
+  color: white;
+}
+#root {
+  width: 75%;
+}
