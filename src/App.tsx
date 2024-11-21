@@ -3,6 +3,7 @@ import "./App.css";
 import Inputfield from "./Components/Input Field/Inputfield";
 import { Todo } from "./Model";
 import Todobox from "./Components/Todobox/Todobox";
+import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 
 function App() {
   const [todo, setTodo] = useState("");
@@ -53,45 +54,106 @@ function App() {
     );
   };
 
+  const onDragEnd = (result: DropResult) => {
+    const { source, destination } = result;
+
+    console.log(result);
+
+    if (!destination) return;
+
+    if (
+      source.droppableId === "Finishedlist" &&
+      destination.droppableId === "Todolist"
+    )
+      return;
+
+    if (source.droppableId === destination.droppableId) {
+      const items = Array.from(
+        source.droppableId === "Todolist" ? todos : todosCompleted
+      );
+      const [reorderedItem] = items.splice(source.index, 1);
+      items.splice(destination.index, 0, reorderedItem);
+
+      if (source.droppableId === "Todolist") {
+        setTodos(items);
+      } else {
+        setTodosCompleted(items);
+      }
+    } else {
+      const sourceItems = Array.from(todos);
+      const [movedItem] = sourceItems.splice(source.index, 1);
+      setTodos(sourceItems);
+
+      const destinationItems = Array.from(todosCompleted);
+      destinationItems.splice(destination.index, 0, {
+        ...movedItem,
+        completed: true,
+      });
+      setTodosCompleted(destinationItems);
+    }
+  };
+
   return (
     <>
       <div className="main-container">
         <div className="title">To Do List</div>
         <Inputfield todo={todo} setTodo={setTodo} handleAdd={handleAdd} />
-        <div className="active-containers">
-          <div className="active">
-            <div>Active Tasks</div>
-            <div className="todo-list">
-              {todos.map((todo) => (
-                <Todobox
-                  id={todo.id}
-                  key={todo.id}
-                  title={todo.name}
-                  handleDelete={handleDelete}
-                  handleFinish={handleFinish}
-                  handleEdit={handleEdit}
-                  completed={todo.completed}
-                />
-              ))}
+        <DragDropContext onDragEnd={onDragEnd}>
+          <div className="active-containers">
+            <div className="active">
+              <div>Active Tasks</div>
+              <Droppable droppableId="Todolist">
+                {(provided) => (
+                  <div
+                    className="todo-list"
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    {todos.map((todo, index) => (
+                      <Todobox
+                        id={todo.id}
+                        index={index}
+                        key={todo.id}
+                        title={todo.name}
+                        handleDelete={handleDelete}
+                        handleFinish={handleFinish}
+                        handleEdit={handleEdit}
+                        completed={todo.completed}
+                      />
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </div>
+            <div className="done">
+              <div>Finished Tasks</div>
+              <Droppable droppableId="Finishedlist">
+                {(provided) => (
+                  <div
+                    className="todo-list"
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    {todosCompleted.map((todo, index) => (
+                      <Todobox
+                        id={todo.id}
+                        index={index}
+                        key={todo.id}
+                        title={todo.name}
+                        handleDelete={handleDelete}
+                        handleFinish={handleFinish}
+                        handleEdit={handleEdit}
+                        completed={todo.completed}
+                      />
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
             </div>
           </div>
-          <div className="done">
-            <div>Finished Tasks</div>
-            <div className="todo-list">
-              {todosCompleted.map((todo) => (
-                <Todobox
-                  id={todo.id}
-                  key={todo.id}
-                  title={todo.name}
-                  handleDelete={handleDelete}
-                  handleFinish={handleFinish}
-                  handleEdit={handleEdit}
-                  completed={todo.completed}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
+        </DragDropContext>
       </div>
     </>
   );
