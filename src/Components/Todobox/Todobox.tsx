@@ -59,9 +59,13 @@ const Todobox: React.FC<BoxProps> = ({
       )}
       {!isEdited && (
         <div className="box-buttons">
-          <button onClick={handleEditClick}>E</button>
+          <button onClick={handleEditClick} disabled={completed}>
+            E
+          </button>
           <button onClick={() => handleDelete(id)}>D</button>
-          <button onClick={() => handleFinish(id)}>F</button>
+          <button onClick={() => handleFinish(id)} disabled={completed}>
+            F
+          </button>
         </div>
       )}
     </div>
